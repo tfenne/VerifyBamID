@@ -25,9 +25,11 @@ public:
 
     /// Read a reference VCF, compute SVD, and write .UD, .mu, .bed, .V files.
     /// @param includeChr  if non-empty, only markers on these chromosomes are used
+    /// @param numSVDPCs   number of PCs to write (0 = all)
     /// @param skipMinSampleCountCheck  if true, < 1000 samples becomes a warning not an error
     void ProcessRefVCF(const std::string& VcfPath,
                        const std::unordered_set<std::string>& includeChr,
+                       int numSVDPCs,
                        bool skipMinSampleCountCheck);
 
     /// Parse a VCF into a genotype matrix.
@@ -42,7 +44,9 @@ public:
     std::vector<PCtype> GetMuArray();
     BED GetchooseBed();
     std::vector<region_t> GetBedVec();
-    void WriteSVD(const std::string &VcfPath);
+    /// Write SVD results to .UD, .mu, .bed, .V files.
+    /// @param numSVDPCs  number of PCs to write (0 = all available)
+    void WriteSVD(const std::string &VcfPath, int numSVDPCs);
 };
 
 

@@ -49,6 +49,7 @@ int execute(int argc, char **argv) {
                             "chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,"
                             "chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,"
                             "chr20,chr21,chr22");
+  int numSVDPCs(10);
   bool skipMinSampleCountCheck(false);
   std::string fixPC("Empty");
   double fixAlpha(-1.), epsilon(1e-8);
@@ -131,6 +132,9 @@ int execute(int argc, char **argv) {
                     "[String] Comma-separated list of chromosome names to "
                     "include when building SVD from --RefVCF. "
                     "[default:human autosomes 1-22/chr1-chr22]")
+  LONG_INT_PARAM("NumSVDPCs", &numSVDPCs,
+                 "[Int] Number of principal components to write to SVD "
+                 "output files. Set to 0 for all components[default:10]")
   LONG_PARAM("SkipMinSampleCountCheck", &skipMinSampleCountCheck,
              "[Bool] ADVANCED: skip the minimum sample count check (1000) "
              "when generating SVD files. Using fewer than 1000 samples may "
@@ -217,7 +221,8 @@ int execute(int argc, char **argv) {
     notice("--IncludeChr: filtering to %d chromosome name(s)", (int)includeChrSet.size());
 
     SVDcalculator calculator;
-    calculator.ProcessRefVCF(RefVCF, includeChrSet, skipMinSampleCountCheck);
+    calculator.ProcessRefVCF(RefVCF, includeChrSet, numSVDPCs,
+                             skipMinSampleCountCheck);
     UDPath = RefVCF + ".UD";
     MeanPath = RefVCF + ".mu";
     BedPath = RefVCF + ".bed";
