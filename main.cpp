@@ -33,7 +33,7 @@ SOFTWARE.
 #include "params.h"
 #include "backward.hpp"
 
-#define VERSION "2.0.1"
+#define VERSION "2.1.0"
 
 int execute(int argc, char **argv) {
 
